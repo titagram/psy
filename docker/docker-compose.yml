@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mysql8-test:
+    image: mysql:8
+    container_name: psy-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql8-test-data:/var/lib/mysql
+
+volumes:
+  mysql8-test-data:
