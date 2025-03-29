@@ -9,12 +9,13 @@ use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
+    
     /**
      * Register any application services.
      */
     public function register(): void
     {
-        //
+        $this->app->register(\Illuminate\Auth\AuthServiceProvider::class);
     }
 
     /**
@@ -22,13 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
 {
-    Gate::define('schedule-session', function (User $user) {
-        return $user->role === 'therapist';
-    });
-
-    Gate::define('request-session', function (User $user) {
-        return $user->role === 'patient';
-    });
+    
 }
 
 }

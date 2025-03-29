@@ -30,12 +30,18 @@ class ScheduledSession extends Model
 {
     use HasFactory;
 
+    protected $fillable =[
+        'session_type_id',
+        'date_time',
+        'therapist',
+    ];
+
     public function therapist()
     {
-        return $this->belongsTo(User::class, 'therapist_id');
+        return $this->belongsTo(User::class, 'therapist');
     }
 
-    public function classType()
+    public function sessionType()
     {
         return $this->belongsTo(SessionType::class);
     }

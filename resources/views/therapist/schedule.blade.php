@@ -6,8 +6,8 @@
 <form action="{{ route('schedule.store') }}" method="POST">
     @csrf
 
-    <label>Class Type:</label>
-    <select name="class_type_id">
+    <label>Prestazione:</label>
+    <select name="session_type_id">
         @foreach($sessionTypes as $sessionType)
             <option value="{{ $sessionType->id }}">{{ $sessionType->name }}</option>
         @endforeach

@@ -34,7 +34,7 @@ Route::get('/admin/dashboard', function () {
 })->middleware(['auth', 'role:admin'])->name('admin.dashboard');
 
 
-Route::resource('/instructor/schedule', ScheduledSessionController::class)
+Route::resource('/therapist/schedule', ScheduledSessionController::class)
     ->only(['index', 'create', 'store', 'destroy'])
     ->middleware(['auth', 'role:therapist']);
 

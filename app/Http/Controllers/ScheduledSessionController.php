@@ -15,7 +15,7 @@ class ScheduledSessionController extends Controller
      */
     public function index()
     {
-        $scheduledClasses = Auth::user()->scheduledSessions()
+        $scheduledSessions = Auth::user()->scheduledSessions()
             ->where('date_time', '>', now())
             ->orderBy('date_time', 'asc')
             ->get();
@@ -28,7 +28,7 @@ class ScheduledSessionController extends Controller
      */
     public function create()
     {
-        if (!Gate::allows('schedule-class')) {
+        if (!Gate::allows('schedule-session')) {
             abort(403, 'Unauthorized');
         }
         $sessionTypes = SessionType::all();
@@ -46,20 +46,20 @@ class ScheduledSessionController extends Controller
 
         $request->merge([
             'date_time' => $dateTime,
-            'instructor_id' => Auth::id(),
+            'therapist' => Auth::id(),
         ]);
 
 
         $validated = $request->validate([
-            'session_type_id' => 'required|exists:class_types,id',
-            'date_time' => 'required|unique:scheduled_classes,date_time|after:now',
-            'therapist_id' => 'required|exists:users,id',
+            'session_type_id' => 'required|exists:session_types,id',
+            'date_time' => 'required|unique:scheduled_sessions,date_time|after:now',
+            'therapist' => 'required|exists:users,id',
         ]);
 
 
         ScheduledSession::create($validated);
 
-        return redirect()->route('schedule.index')->with('success', 'Class scheduled successfully!');
+        return redirect()->route('schedule.index')->with('success', 'Session scheduled successfully!');
     }
 
 
@@ -82,9 +82,9 @@ class ScheduledSessionController extends Controller
     } */
 
 
-    public function destroy(ScheduledSession $schedule)
+    public function destroy(ScheduledSession $scheduledSession)
     {
-        if ($schedule->therapist_id !== Auth::id()) {
+        if (Auth::user()->cannot('delete', $scheduledSession)) {
             abort(403, 'Unauthorized');
         }
 
