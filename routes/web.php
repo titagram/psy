@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ScheduledSessionController;
 
@@ -38,7 +39,7 @@ Route::resource('/therapist/schedule', ScheduledSessionController::class)
     ->only(['index', 'create', 'store', 'destroy'])
     ->middleware(['auth', 'role:therapist']);
 
-    
+
 Route::middleware(['auth', 'role:patient'])->group(function () {
     Route::get('patient/book', [BookingController::class, 'create'])->name('booking.create');
     Route::post('patient/bookings', [BookingController::class, 'store'])->name('booking.store');
