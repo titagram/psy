@@ -46,4 +46,11 @@ class ScheduledSession extends Model
         return $this->belongsTo(SessionType::class);
     }
 
+    //Funzione per admin
+    public function incomingPatients()
+    {
+        return $this->belongsToMany(User::class, 'bookings');
+    }
+
+
 }
