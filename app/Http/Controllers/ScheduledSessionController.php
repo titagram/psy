@@ -88,7 +88,12 @@ class ScheduledSessionController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        $schedule->delete();
+          
+        $scheduledSession->patients()->detach();
+
+        SessionCanceled::dispatch($scheduledSession);
+
+        $scheduledSession->delete();
 
         return redirect()->route('schedule.index')->with('success', 'Seduta cancellata.');
 

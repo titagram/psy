@@ -47,10 +47,26 @@ class ScheduledSession extends Model
     }
 
     //Funzione per admin
-    public function incomingPatients()
+    public function bookings()
     {
         return $this->belongsToMany(User::class, 'bookings');
     }
+
+    public function scopeUpcoming(Builder $query)
+    {
+        return $query->where('date_time', '>', now());
+    }
+
+    public function scopeNotBooked(Builder $query)
+    {
+        return $query->whereDoesntHave('patients', function ($query) {
+            $query->where('user_id', auth()->id());
+        });
+    }
+
+    
+
+
 
 
 }

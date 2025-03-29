@@ -23,6 +23,16 @@
                         {{ __('Mostra') }}
                     </x-nav-link>
                     @endcan
+                    @can('book-session')
+                    <x-nav-link :href="route('booking.create')">
+                        {{ __('Prenota una seduta') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('booking.index')">
+                        {{ __('Sedute prenotate') }}
+                    </x-nav-link>
+                       
+                    @endcan
+
                 </div>
             </div>
 

@@ -23,5 +23,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('request-session', function (User $user) {
             return $user->role === 'patient';
         });
+
+        Gate::define('book-session', function ($user) {
+            return $user->role === 'patient';
+        });
+        
     }
 }
